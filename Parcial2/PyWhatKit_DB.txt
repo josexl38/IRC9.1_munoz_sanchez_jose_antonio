@@ -1,0 +1,110 @@
+Date: 15/2/2025
+Time: 13:22
+Phone Number: +524443352775
+Message: Hola desde python
+--------------------
+Date: 15/2/2025
+Time: 13:27
+Phone Number: +524441698269
+Message: Hola desde python
+--------------------
+Date: 15/2/2025
+Time: 13:31
+Phone Number: +521234567890
+Message: Este es un mensaje automático
+--------------------
+Date: 15/2/2025
+Time: 13:32
+Phone Number: +524441698269
+Message: Este es un mensaje automático
+--------------------
+Date: 15/2/2025
+Time: 13:33
+Phone Number: +524441698269
+Message: Este es un mensaje automático
+--------------------
+Date: 15/2/2025
+Time: 13:33
+Phone Number: +524441698269
+Message: Este es un mensaje automático
+--------------------
+Date: 15/2/2025
+Time: 13:34
+Phone Number: +524441698269
+Message: Este es un mensaje automático
+--------------------
+Date: 15/2/2025
+Time: 13:34
+Phone Number: +524441698269
+Message: Este es un mensaje automático
+--------------------
+Date: 15/2/2025
+Time: 13:35
+Phone Number: +524441698269
+Message: Este es un mensaje automático
+--------------------
+Date: 15/2/2025
+Time: 13:35
+Phone Number: +524441698269
+Message: Este es un mensaje automático
+--------------------
+Date: 15/2/2025
+Time: 13:36
+Phone Number: +524441698269
+Message: Este es un mensaje automático
+--------------------
+Date: 15/2/2025
+Time: 13:37
+Phone Number: +524441698269
+Message: Este es un mensaje automático
+--------------------
+Date: 15/2/2025
+Time: 13:37
+Phone Number: +524441698269
+Message: Este es un mensaje automático
+--------------------
+Date: 15/2/2025
+Time: 13:37
+Phone Number: +524441698269
+Message: Este es un mensaje automático
+--------------------
+Date: 15/2/2025
+Time: 13:38
+Phone Number: +524441698269
+Message: Este es un mensaje automático
+--------------------
+Date: 15/2/2025
+Time: 13:38
+Phone Number: +524441698269
+Message: Este es un mensaje automático
+--------------------
+Date: 15/2/2025
+Time: 13:38
+Phone Number: +524441698269
+Message: Este es un mensaje automático
+--------------------
+Date: 15/2/2025
+Time: 13:39
+Phone Number: +524441698269
+Message: Este es un mensaje automático
+--------------------
+Date: 15/2/2025
+Time: 13:39
+Phone Number: +524441698269
+Message: Este es un mensaje automático
+--------------------
+Date: 15/2/2025
+Time: 13:39
+Phone Number: +524441698269
+Message: Este es un mensaje automático
+--------------------
+Date: 15/2/2025
+Time: 13:39
+Phone Number: +524441698269
+Message: Este es un mensaje automático
+--------------------
+Date: 15/2/2025
+Time: 13:40
+Phone Number: +524441698269
+Message: Este es un mensaje automático
+--------------------
