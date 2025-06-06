@@ -1,0 +1,45 @@
+(ansible-venv) [root@localhost ansible-windows]# ansible-playbook playbooks/win_basic.yml
+
+PLAY [Recolectar información básica de Windows] ************************************************************************************************************
+
+TASK [Gathering Facts] *************************************************************************************************************************************
+ok: [WinServer1]
+
+TASK [Obtener versión de Windows con PowerShell] ***********************************************************************************************************
+changed: [WinServer1]
+
+TASK [Crear carpeta en C:\datos] ***************************************************************************************************************************
+changed: [WinServer1]
+
+PLAY RECAP *************************************************************************************************************************************************
+WinServer1                 : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+(ansible-venv) [root@localhost ansible-windows]# ansible-playbook playbooks/win_iis.yml
+
+PLAY [Instalar IIS en servidores Windows] ******************************************************************************************************************
+
+TASK [Gathering Facts] *************************************************************************************************************************************
+ok: [WinServer1]
+
+TASK [Instalar característica IIS] *************************************************************************************************************************
+changed: [WinServer1]
+
+TASK [Asegurar que el servicio de IIS esté iniciado] *******************************************************************************************************
+ok: [WinServer1]
+
+PLAY RECAP *************************************************************************************************************************************************
+WinServer1                 : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+
+(ansible-venv) [root@localhost ansible-windows]# ansible-playbook playbooks/win_updates.yml
+
+PLAY [Aplicar actualizaciones de Windows] ******************************************************************************************************************
+
+TASK [Gathering Facts] *************************************************************************************************************************************
+ok: [WinServer1]
+
+TASK [Instalar actualizaciones disponibles] ****************************************************************************************************************
+ok: [WinServer1]
+
+PLAY RECAP *************************************************************************************************************************************************
+WinServer1                 : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
