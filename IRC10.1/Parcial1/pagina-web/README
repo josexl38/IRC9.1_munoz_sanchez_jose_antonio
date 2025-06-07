@@ -1,0 +1,49 @@
+[root@localhost antonio]# ansible-playbook -i inventory.ini playboks.yml
+[WARNING]: Found both group and host with same name: master
+
+PLAY [Desafío de depuración Ansible] ***********************************************************************************
+
+TASK [Gathering Facts] *************************************************************************************************
+ok: [master]
+ok: [worker2]
+ok: [worker1]
+
+TASK [Crear el usuario "Clase"] ****************************************************************************************
+ok: [master]
+ok: [worker1]
+ok: [worker2]
+
+TASK [Instalar el paquete apache] **************************************************************************************
+ok: [worker2]
+ok: [worker1]
+ok: [master]
+
+TASK [Copiar página de inicio] *****************************************************************************************
+ok: [worker2]
+ok: [worker1]
+ok: [master]
+
+TASK [Habilitar servicio web] ******************************************************************************************
+ok: [master]
+ok: [worker1]
+ok: [worker2]
+
+TASK [Asegurar que firewalld esté instalado] ***************************************************************************
+ok: [worker1]
+ok: [master]
+ok: [worker2]
+
+TASK [Asegurar que firewalld esté activo] ******************************************************************************
+changed: [master]
+changed: [worker2]
+changed: [worker1]
+
+TASK [Permitir tráfico HTTP en el firewall] ****************************************************************************
+ok: [worker2]
+ok: [master]
+ok: [worker1]
+
+PLAY RECAP *************************************************************************************************************
+master                     : ok=8    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+worker1                    : ok=8    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+worker2                    : ok=8    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
