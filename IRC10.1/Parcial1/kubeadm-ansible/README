@@ -1,0 +1,165 @@
+[root@192 kubeadm-ansible]# ansible-playbook -i inventory.ini playbook.yml
+[WARNING]: Found both group and host with same name: master
+
+PLAY [Deploy Kubernetes Cluster] ***************************************************************************************
+
+TASK [Gathering Facts] *************************************************************************************************
+ok: [master]
+ok: [worker1]
+ok: [worker2]
+
+TASK [Include common tasks (docker, kubeadm)] **************************************************************************
+
+TASK [common : Disable SELinux (temporal)] *****************************************************************************
+fatal: [master]: FAILED! => {"changed": true, "cmd": ["setenforce", "0"], "delta": "0:00:00.005579", "end": "2025-06-06 23:33:07.537607", "msg": "non-zero return code", "rc": 1, "start": "2025-06-06 23:33:07.532028", "stderr": "setenforce: SELinux is disabled", "stderr_lines": ["setenforce: SELinux is disabled"], "stdout": "", "stdout_lines": []}
+...ignoring
+fatal: [worker1]: FAILED! => {"changed": true, "cmd": ["setenforce", "0"], "delta": "0:00:00.005964", "end": "2025-06-06 23:33:07.600327", "msg": "non-zero return code", "rc": 1, "start": "2025-06-06 23:33:07.594363", "stderr": "setenforce: SELinux is disabled", "stderr_lines": ["setenforce: SELinux is disabled"], "stdout": "", "stdout_lines": []}
+...ignoring
+fatal: [worker2]: FAILED! => {"changed": true, "cmd": ["setenforce", "0"], "delta": "0:00:00.004522", "end": "2025-06-06 23:33:03.699148", "msg": "non-zero return code", "rc": 1, "start": "2025-06-06 23:33:03.694626", "stderr": "setenforce: SELinux is disabled", "stderr_lines": ["setenforce: SELinux is disabled"], "stdout": "", "stdout_lines": []}
+...ignoring
+
+TASK [common : Disable SELinux (persistente)] **************************************************************************
+ok: [master]
+ok: [worker1]
+ok: [worker2]
+
+TASK [common : Disable Firewalld] **************************************************************************************
+ok: [master]
+ok: [worker1]
+ok: [worker2]
+
+TASK [common : Disable Swap] *******************************************************************************************
+changed: [master]
+changed: [worker2]
+changed: [worker1]
+
+TASK [common : Comment swap in /etc/fstab] *****************************************************************************
+ok: [master]
+ok: [worker2]
+ok: [worker1]
+
+TASK [common : Gather package facts] ***********************************************************************************
+ok: [master]
+ok: [worker2]
+ok: [worker1]
+
+TASK [common : Install required system packages (if missing)] **********************************************************
+skipping: [master] => (item=yum-utils)
+skipping: [master] => (item=device-mapper-persistent-data)
+skipping: [master] => (item=lvm2)
+skipping: [worker1] => (item=yum-utils)
+skipping: [worker1] => (item=device-mapper-persistent-data)
+skipping: [master]
+skipping: [worker1] => (item=lvm2)
+skipping: [worker1]
+skipping: [worker2] => (item=yum-utils)
+skipping: [worker2] => (item=device-mapper-persistent-data)
+skipping: [worker2] => (item=lvm2)
+skipping: [worker2]
+
+TASK [common : Check if Docker repo exists] ****************************************************************************
+ok: [master]
+ok: [worker2]
+ok: [worker1]
+
+TASK [common : Try downloading Docker repo] ****************************************************************************
+skipping: [master]
+skipping: [worker1]
+skipping: [worker2]
+
+TASK [common : Add Docker repo using dnf if download failed] ***********************************************************
+skipping: [master]
+skipping: [worker1]
+skipping: [worker2]
+
+TASK [common : Verify Docker repo was added] ***************************************************************************
+skipping: [master]
+skipping: [worker1]
+skipping: [worker2]
+
+TASK [common : Clean metadata cache] ***********************************************************************************
+skipping: [master]
+skipping: [worker1]
+skipping: [worker2]
+
+TASK [common : Install Docker packages (if missing)] *******************************************************************
+skipping: [master] => (item=docker-ce)
+skipping: [master] => (item=docker-ce-cli)
+skipping: [master] => (item=containerd.io)
+skipping: [worker1] => (item=docker-ce)
+skipping: [worker1] => (item=docker-ce-cli)
+skipping: [master]
+skipping: [worker1] => (item=containerd.io)
+skipping: [worker1]
+skipping: [worker2] => (item=docker-ce)
+skipping: [worker2] => (item=docker-ce-cli)
+skipping: [worker2] => (item=containerd.io)
+skipping: [worker2]
+
+TASK [common : Load bridge kernel module] ******************************************************************************
+changed: [master]
+changed: [worker2]
+changed: [worker1]
+
+TASK [common : Enable bridge settings] *********************************************************************************
+changed: [master]
+changed: [worker1]
+changed: [worker2]
+
+TASK [common : Reset containerd configuration] *************************************************************************
+ok: [master]
+ok: [worker1]
+ok: [worker2]
+
+TASK [common : Configure containerd] ***********************************************************************************
+changed: [master]
+changed: [worker1]
+changed: [worker2]
+
+TASK [common : Create containerd sandbox directory] ********************************************************************
+changed: [master]
+changed: [worker2]
+changed: [worker1]
+
+TASK [common : Configure DNS resolvers] ********************************************************************************
+changed: [master]
+changed: [worker2]
+changed: [worker1]
+
+TASK [common : Add Kubernetes repository] ******************************************************************************
+changed: [worker2]
+changed: [master]
+changed: [worker1]
+
+TASK [common : Install Kubernetes packages (if missing)] ***************************************************************
+[WARNING]: conditional statements should not include jinja2 templating delimiters such as {{ }} or {% %}. Found:
+"kube{{ item }}-" + kube_version + ".0" not in ansible_facts.packages
+[WARNING]: conditional statements should not include jinja2 templating delimiters such as {{ }} or {% %}. Found:
+"kube{{ item }}-" + kube_version + ".0" not in ansible_facts.packages
+[WARNING]: conditional statements should not include jinja2 templating delimiters such as {{ }} or {% %}. Found:
+"kube{{ item }}-" + kube_version + ".0" not in ansible_facts.packages
+changed: [master] => (item=adm)
+changed: [master] => (item=let)
+changed: [master] => (item=ctl)
+changed: [worker1] => (item=adm)
+changed: [worker2] => (item=adm)
+changed: [worker1] => (item=let)
+changed: [worker1] => (item=ctl)
+changed: [worker2] => (item=let)
+changed: [worker2] => (item=ctl)
+
+TASK [common : Enable kubelet service] *********************************************************************************
+changed: [master]
+changed: [worker1]
+changed: [worker2]
+
+TASK [common : Verify containerd is running] ***************************************************************************
+fatal: [master]: FAILED! => {"changed": false, "cmd": ["ctr", "version"], "delta": "0:00:10.020457", "end": "2025-06-06 23:35:18.803817", "failed_when_result": true, "msg": "non-zero return code", "rc": 1, "start": "2025-06-06 23:35:08.783360", "stderr": "ctr: failed to dial \"/run/containerd/containerd.sock\": context deadline exceeded: connection error: desc = \"transport: error while dialing: dial unix:///run/containerd/containerd.sock: timeout\"", "stderr_lines": ["ctr: failed to dial \"/run/containerd/containerd.sock\": context deadline exceeded: connection error: desc = \"transport: error while dialing: dial unix:///run/containerd/containerd.sock: timeout\""], "stdout": "Client:\n  Version:  1.7.27\n  Revision: 05044ec0a9a75232cad458027ca83437aae3f4da\n  Go version: go1.23.7", "stdout_lines": ["Client:", "  Version:  1.7.27", "  Revision: 05044ec0a9a75232cad458027ca83437aae3f4da", "  Go version: go1.23.7"]}
+fatal: [worker2]: FAILED! => {"changed": false, "cmd": ["ctr", "version"], "delta": "0:00:10.094341", "end": "2025-06-06 23:35:19.044444", "failed_when_result": true, "msg": "non-zero return code", "rc": 1, "start": "2025-06-06 23:35:08.950103", "stderr": "ctr: failed to dial \"/run/containerd/containerd.sock\": context deadline exceeded: connection error: desc = \"transport: error while dialing: dial unix:///run/containerd/containerd.sock: timeout\"", "stderr_lines": ["ctr: failed to dial \"/run/containerd/containerd.sock\": context deadline exceeded: connection error: desc = \"transport: error while dialing: dial unix:///run/containerd/containerd.sock: timeout\""], "stdout": "Client:\n  Version:  1.7.27\n  Revision: 05044ec0a9a75232cad458027ca83437aae3f4da\n  Go version: go1.23.7", "stdout_lines": ["Client:", "  Version:  1.7.27", "  Revision: 05044ec0a9a75232cad458027ca83437aae3f4da", "  Go version: go1.23.7"]}
+fatal: [worker1]: FAILED! => {"changed": false, "cmd": ["ctr", "version"], "delta": "0:00:10.104807", "end": "2025-06-06 23:35:21.526862", "failed_when_result": true, "msg": "non-zero return code", "rc": 1, "start": "2025-06-06 23:35:11.422055", "stderr": "ctr: failed to dial \"/run/containerd/containerd.sock\": context deadline exceeded: connection error: desc = \"transport: error while dialing: dial unix:///run/containerd/containerd.sock: timeout\"", "stderr_lines": ["ctr: failed to dial \"/run/containerd/containerd.sock\": context deadline exceeded: connection error: desc = \"transport: error while dialing: dial unix:///run/containerd/containerd.sock: timeout\""], "stdout": "Client:\n  Version:  1.7.27\n  Revision: 05044ec0a9a75232cad458027ca83437aae3f4da\n  Go version: go1.23.7", "stdout_lines": ["Client:", "  Version:  1.7.27", "  Revision: 05044ec0a9a75232cad458027ca83437aae3f4da", "  Go version: go1.23.7"]}
+
+PLAY RECAP *************************************************************************************************************
+master                     : ok=17   changed=10   unreachable=0    failed=1    skipped=6    rescued=0    ignored=1
+worker1                    : ok=17   changed=10   unreachable=0    failed=1    skipped=6    rescued=0    ignored=1
+worker2                    : ok=17   changed=10   unreachable=0    failed=1    skipped=6    rescued=0    ignored=1
+
