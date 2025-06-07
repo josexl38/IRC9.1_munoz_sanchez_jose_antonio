@@ -1,0 +1,26 @@
+---
+- name: restart containerd
+  service:
+    name: containerd
+    state: restarted
+    enabled: yes
+
+- name: reboot if needed
+  reboot:
+    msg: "Reboot initiated by Ansible for kernel updates"
+    connect_timeout: 5
+    reboot_timeout: 600
+    pre_reboot_delay: 0
+    post_reboot_delay: 30
+
+- name: restart docker
+  service:
+    name: docker
+    state: restarted
+    enabled: yes
+
+- name: restart kubelet
+  service:
+    name: kubelet
+    state: restarted
+    enabled: yes

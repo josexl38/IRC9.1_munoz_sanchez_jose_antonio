@@ -1,0 +1,155 @@
+---
+- name: Disable SELinux (temporal)
+  command: setenforce 0
+  ignore_errors: yes
+
+- name: Disable SELinux (persistente)
+  lineinfile:
+    path: /etc/selinux/config
+    regexp: '^SELINUX='
+    line: 'SELINUX=disabled'
+
+- name: Disable Firewalld
+  service:
+    name: firewalld
+    state: stopped
+    enabled: no
+
+- name: Disable Swap
+  command: swapoff -a
+  ignore_errors: yes
+
+- name: Comment swap in /etc/fstab
+  replace:
+    path: /etc/fstab
+    regexp: '^([^#].*?\sswap\s+.*)$'
+    replace: '#\1'
+
+- name: Gather package facts
+  package_facts:
+    manager: auto
+
+- name: Install required system packages (if missing)
+  dnf:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - yum-utils
+    - device-mapper-persistent-data
+    - lvm2
+  when: item not in ansible_facts.packages
+
+- name: Check if Docker repo exists
+  stat:
+    path: /etc/yum.repos.d/docker-ce.repo
+  register: docker_repo
+
+- name: Add Docker repository (if needed)
+  block:
+    - name: Try downloading Docker repo
+      get_url:
+        url: https://download.docker.com/linux/centos/docker-ce.repo
+        dest: /etc/yum.repos.d/docker-ce.repo
+        mode: '0644'
+        timeout: 30
+      ignore_errors: yes
+      register: download_attempt
+
+    - name: Add Docker repo using dnf if download failed
+      command: dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+      when: download_attempt is failed
+      args:
+        creates: /etc/yum.repos.d/docker-ce.repo
+
+    - name: Verify Docker repo was added
+      stat:
+        path: /etc/yum.repos.d/docker-ce.repo
+      register: repo_verify
+      failed_when: not repo_verify.stat.exists
+
+    - name: Clean metadata cache
+      command: dnf clean all
+      when: repo_verify.stat.exists
+  when: not docker_repo.stat.exists
+
+- name: Install Docker packages (if missing)
+  dnf:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io
+  when: item not in ansible_facts.packages
+  notify: restart docker
+
+- name: Load bridge kernel module
+  modprobe:
+    name: br_netfilter
+    state: present
+
+- name: Enable bridge settings
+  sysctl:
+    name: net.bridge.bridge-nf-call-iptables
+    value: '1'
+    state: present
+    reload: yes
+
+- name: Reset containerd configuration
+  command: containerd config default > /etc/containerd/config.toml
+  args:
+    creates: /etc/containerd/config.toml
+
+- name: Configure containerd
+  template:
+    src: containerd.conf.j2
+    dest: /etc/containerd/config.toml
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart containerd
+
+- name: Create containerd sandbox directory
+  file:
+    path: /var/lib/containerd/io.containerd.snapshotter.v1.overlayfs
+    state: directory
+    mode: '0755'
+
+- name: Configure DNS resolvers
+  template:
+    src: resolv.conf.j2
+    dest: /etc/resolv.conf
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Add Kubernetes repository
+  yum_repository:
+    name: kubernetes
+    description: Kubernetes
+    baseurl: https://pkgs.k8s.io/core:/stable:/v{{ kube_version }}/rpm/
+    gpgkey: https://pkgs.k8s.io/core:/stable:/v{{ kube_version }}/rpm/repodata/repomd.xml.key
+    gpgcheck: yes
+    enabled: yes
+
+- name: Install Kubernetes packages (if missing)
+  dnf:
+    name: "kube{{ item }}-{{ kube_version }}.0"
+    state: present
+  loop:
+    - adm
+    - let
+    - ctl
+  when: '"kube{{ item }}-" + kube_version + ".0" not in ansible_facts.packages'
+  notify: restart kubelet
+
+- name: Enable kubelet service
+  service:
+    name: kubelet
+    enabled: yes
+
+- name: Verify containerd is running
+  command: ctr version
+  register: containerd_status
+  changed_when: false
+  failed_when: containerd_status.rc != 0
