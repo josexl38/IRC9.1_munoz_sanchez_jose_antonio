@@ -1,0 +1,10 @@
+---
+- name: Ensure required packages are installed
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - vim
+    - htop
+    - curl
+    - git

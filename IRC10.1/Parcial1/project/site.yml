@@ -1,0 +1,15 @@
+---
+- name: Aplicar configuración común
+  hosts: all
+  roles:
+    - common
+
+- name: Configurar servidores web
+  hosts: webservers
+  roles:
+    - webserver
+
+- name: Configurar servidores de base de datos
+  hosts: dbservers
+  roles:
+    - database
