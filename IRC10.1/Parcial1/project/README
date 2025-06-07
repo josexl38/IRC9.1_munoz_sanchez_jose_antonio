@@ -1,0 +1,109 @@
+[root@192 project]# ansible-playbook -i inventories/development/hosts site.yml --vault-password-file vault_password.txt
+
+PLAY [Configure all servers] *******************************************************************************************************************************
+
+TASK [Gathering Facts] *************************************************************************************************************************************
+ok: [dev-web-01]
+ok: [dev-db-01]
+
+TASK [common : Ensure required packages are installed] *****************************************************************************************************
+ok: [dev-web-01] => (item=vim)
+ok: [dev-db-01] => (item=vim)
+ok: [dev-web-01] => (item=curl)
+ok: [dev-db-01] => (item=curl)
+ok: [dev-web-01] => (item=git)
+ok: [dev-db-01] => (item=git)
+
+TASK [common : Configure timezone] *************************************************************************************************************************
+ok: [dev-web-01]
+ok: [dev-db-01]
+
+PLAY [Configure web server] ********************************************************************************************************************************
+
+TASK [Gathering Facts] *************************************************************************************************************************************
+ok: [dev-web-01]
+
+TASK [webserver : Install web server packages] *************************************************************************************************************
+ok: [dev-web-01] => (item=nginx)
+ok: [dev-web-01] => (item=python3-pip)
+
+TASK [webserver : Configure Nginx] *************************************************************************************************************************
+fatal: [dev-web-01]: FAILED! => {"changed": false, "checksum": "3b0afc07ac13ec274691333855cd0924181ea553", "msg": "Destination directory /etc/nginx/sites-available does not exist"}
+
+PLAY RECAP *************************************************************************************************************************************************
+dev-db-01                  : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+dev-web-01                 : ok=5    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0
+
+[root@192 project]# ansible-playbook -i inventories/staging/hosts site.yml --vault-password-file vault_password.txt
+
+PLAY [Configure all servers] *******************************************************************************************************************************
+
+TASK [Gathering Facts] *************************************************************************************************************************************
+ok: [staging-db-01]
+ok: [staging-web-01]
+
+TASK [common : Ensure required packages are installed] *****************************************************************************************************
+ok: [staging-db-01] => (item=vim)
+ok: [staging-web-01] => (item=vim)
+ok: [staging-db-01] => (item=curl)
+ok: [staging-web-01] => (item=curl)
+ok: [staging-db-01] => (item=git)
+ok: [staging-web-01] => (item=git)
+
+TASK [common : Configure timezone] *************************************************************************************************************************
+ok: [staging-db-01]
+ok: [staging-web-01]
+
+PLAY [Configure web server] ********************************************************************************************************************************
+
+TASK [Gathering Facts] *************************************************************************************************************************************
+ok: [staging-web-01]
+
+TASK [webserver : Install web server packages] *************************************************************************************************************
+ok: [staging-web-01] => (item=nginx)
+ok: [staging-web-01] => (item=python3-pip)
+
+TASK [webserver : Configure Nginx] *************************************************************************************************************************
+An exception occurred during task execution. To see the full traceback, use -vvv. The error was: ansible.errors.AnsibleUndefinedVariable: 'app_port' is undefined. 'app_port' is undefined
+fatal: [staging-web-01]: FAILED! => {"changed": false, "msg": "AnsibleUndefinedVariable: 'app_port' is undefined. 'app_port' is undefined"}
+
+PLAY RECAP *************************************************************************************************************************************************
+staging-db-01              : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+staging-web-01             : ok=5    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0
+
+[root@192 project]# ansible-playbook -i inventories/production/hosts site.yml --vault-password-file vault_password.txt
+
+PLAY [Configure all servers] *******************************************************************************************************************************
+
+TASK [Gathering Facts] *************************************************************************************************************************************
+ok: [prod-web-01]
+ok: [prod-db-01]
+
+TASK [common : Ensure required packages are installed] *****************************************************************************************************
+ok: [prod-db-01] => (item=vim)
+ok: [prod-web-01] => (item=vim)
+ok: [prod-db-01] => (item=curl)
+ok: [prod-web-01] => (item=curl)
+ok: [prod-web-01] => (item=git)
+ok: [prod-db-01] => (item=git)
+
+TASK [common : Configure timezone] *************************************************************************************************************************
+ok: [prod-web-01]
+ok: [prod-db-01]
+
+PLAY [Configure web server] ********************************************************************************************************************************
+
+TASK [Gathering Facts] *************************************************************************************************************************************
+ok: [prod-web-01]
+
+TASK [webserver : Install web server packages] *************************************************************************************************************
+ok: [prod-web-01] => (item=nginx)
+ok: [prod-web-01] => (item=python3-pip)
+
+TASK [webserver : Configure Nginx] *************************************************************************************************************************
+An exception occurred during task execution. To see the full traceback, use -vvv. The error was: ansible.errors.AnsibleUndefinedVariable: 'app_port' is undefined. 'app_port' is undefined
+fatal: [prod-web-01]: FAILED! => {"changed": false, "msg": "AnsibleUndefinedVariable: 'app_port' is undefined. 'app_port' is undefined"}
+
+PLAY RECAP *************************************************************************************************************************************************
+prod-db-01                 : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+prod-web-01                : ok=5    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0
