@@ -8,5 +8,6 @@ services:
       - "5001:5001"
     volumes:
       - .:/app
+      - ~/.ssh/id_rsa:/app/keys/id_rsa:ro
     environment:
       - ANSIBLE_HOST_KEY_CHECKING=False
