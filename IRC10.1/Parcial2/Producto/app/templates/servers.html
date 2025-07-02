@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Administrar Servidores</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Administrar Servidores</h1>
+
+    <nav>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/playbooks">Administrar Playbooks</a>
+        <a href="/servers">Administrar Servidores</a>
+        <a href="/logs">Ver Logs</a>
+        <a href="/logout" class="logout">Cerrar sesión</a>
+    </nav>
+
+    <h2>Servidores configurados</h2>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    {% if servers %}
+        <table>
+            <tr>
+                <th>Alias</th>
+                <th>Dirección IP</th>
+                <th>Usuario SSH</th>
+                <th>Autenticación</th>
+                <th>Acciones</th>
+            </tr>
+            {% for alias, server in servers.items() %}
+                <tr>
+                    <td>{{ alias }}</td>
+                    <td>{{ server.ip }}</td>
+                    <td>{{ server.user }}</td>
+                    <td>
+                        {% if server.ssh_key %}
+                            🔑 Llave SSH <br><small>{{ server.ssh_key }}</small>
+                        {% elif server.password %}
+                            🔒 Contraseña
+                        {% else %}
+                            ⚠️ Sin credenciales
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="/servers/edit/{{ alias }}">✏️ Editar</a> |
+                        <form action="/servers/delete/{{ alias }}" method="POST" style="display:inline;">
+                            <button type="submit" onclick="return confirm('¿Seguro que deseas eliminar este servidor?');">
+                                🗑️ Eliminar
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No hay servidores configurados.</p>
+    {% endif %}
+
+    <br>
+    <a href="/servers/create"><button>➕ Agregar Servidor</button></a>
+
+</div>
+
+</body>
+</html>
