@@ -1,0 +1,34 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Nuevo Playbook</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="container">
+
+    <h1>Crear Nuevo Playbook</h1>
+
+    <nav>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/playbooks">Administrar Playbooks</a>
+        <a href="/logs">Ver Logs</a>
+        <a href="/logout" class="logout">Cerrar sesión</a>
+    </nav>
+
+    <a href="/playbooks">🔙 Volver a Playbooks</a>
+
+    <form method="post">
+        <label for="filename">Nombre del archivo:</label><br>
+        <input type="text" id="filename" name="filename" placeholder="ejemplo.yml" required><br><br>
+
+        <label for="content">Contenido del Playbook:</label><br>
+        <textarea id="content" name="content" rows="20" cols="80" required></textarea><br><br>
+
+        <button type="submit">Crear</button>
+    </form>
+
+</body>
+</html>
+
