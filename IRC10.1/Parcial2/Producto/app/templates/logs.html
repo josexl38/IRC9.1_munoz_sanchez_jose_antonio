@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Logs - Ansible Platform</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>📜 Registro de Actividades</h1>
+
+        <nav>
+            <a href="/dashboard">🏠 Dashboard</a> |
+            <a href="/playbooks">📂 Playbooks</a> |
+            <a href="/logout" class="logout">🚪 Cerrar sesión</a>
+        </nav>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>👤 Usuario</th>
+                    <th>📝 Acción</th>
+                    <th>⏰ Fecha y Hora</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for log in logs %}
+                <tr>
+                    <td>{{ log.user }}</td>
+                    <td>{{ log.action }}</td>
+                    <td>{{ log.timestamp }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
