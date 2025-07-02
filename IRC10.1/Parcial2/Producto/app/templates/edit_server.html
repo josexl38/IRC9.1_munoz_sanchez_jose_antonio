@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Servidor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>✏️ Editar Servidor: {{ alias }}</h1>
+
+    <nav>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/playbooks">Administrar Playbooks</a>
+        <a href="/servers">Administrar Servidores</a>
+        <a href="/logs">Ver Logs</a>
+        <a href="/logout" class="logout">Cerrar sesión</a>
+    </nav>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST">
+        <label>Alias del servidor:</label>
+        <input type="text" name="alias" value="{{ alias }}" required>
+
+        <label>Dirección IP o hostname:</label>
+        <input type="text" name="ip" value="{{ server.ip }}" required>
+
+        <label>Usuario SSH:</label>
+        <input type="text" name="user" value="{{ server.user }}" required>
+
+        <label>Ruta de llave privada SSH (opcional):</label>
+        <input type="text" name="ssh_key" value="{{ server.ssh_key or '' }}" placeholder="/ruta/a/tu/id_rsa">
+
+        <label>Contraseña SSH (opcional, si no hay llave):</label>
+        <input type="password" name="password" placeholder="********">
+
+        <p><small>⚠️ Debes proporcionar <b>una llave SSH</b> o <b>una contraseña</b> para conectarte al servidor.</small></p>
+
+        <button type="submit">💾 Actualizar Servidor</button>
+    </form>
+
+</div>
+
+</body>
+</html>
