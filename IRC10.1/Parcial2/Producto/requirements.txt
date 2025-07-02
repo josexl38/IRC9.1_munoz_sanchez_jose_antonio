@@ -1,0 +1,4 @@
+flask>=2.0.0
+pymongo>=4.0.0
+ansible>=7.0.0
+ansible-runner>=2.0.0
