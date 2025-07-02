@@ -1,0 +1,32 @@
+version: '3.9'
+
+services:
+  web:
+    build: .
+    container_name: ansible-platform-ui
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./playbooks:/app/playbooks
+      - ./ssh_keys:/app/ssh_keys
+      - ./servers.json:/app/servers.json
+    environment:
+      - FLASK_APP=app/app.py
+      - MONGO_HOST=mongodb
+      - MONGO_PORT=27017
+      - MONGO_DB=ansible_platform
+    depends_on:
+      - mongodb
+    restart: unless-stopped
+
+  mongodb:
+    image: mongo:5
+    container_name: ansible-platform-db
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    restart: unless-stopped
+
+volumes:
+  mongodb_data:
