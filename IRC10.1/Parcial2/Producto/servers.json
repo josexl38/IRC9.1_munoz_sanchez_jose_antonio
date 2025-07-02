@@ -1,0 +1,26 @@
+{
+    "master": {
+        "ip": "192.168.23.137",
+        "user": "antonio",
+        "ssh_key": "/home/antonio/.ssh/id_rsa",
+        "password": ""
+    },
+    "worker1": {
+        "ip": "192.168.23.138",
+        "user": "antonio",
+        "ssh_key": "/home/antonio/.ssh/id_rsa",
+        "password": ""
+    },
+    "worker2": {
+        "ip": "192.168.23.139",
+        "user": "antonio",
+        "ssh_key": "/home/antonio/.ssh/id_rsa",
+        "password": ""
+    },
+    "test1": {
+        "ip": "192.168.45.6",
+        "user": "asistemas",
+        "ssh_key": "",
+        "password": "prueba"
+    },
+}
