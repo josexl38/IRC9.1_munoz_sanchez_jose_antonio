@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Playbooks - Ansible Platform</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>📁 Gestión de Playbooks</h1>
+
+        <nav>
+            <a href="/dashboard">🔙 Dashboard</a> |
+            <a href="/playbooks/create">➕ Crear Playbook</a> |
+            <a href="/logout" class="logout">Cerrar sesión</a>
+        </nav>
+
+        {% if playbooks %}
+            <ul>
+                {% for pb in playbooks %}
+                <li>
+                    <strong>{{ pb }}</strong>
+                    &nbsp;&nbsp;
+                    <a href="/playbooks/edit/{{ pb }}">✏️ Editar</a>
+                    <form action="/playbooks/delete/{{ pb }}" method="post" style="display:inline;">
+                        <button type="submit" onclick="return confirm('¿Seguro que quieres eliminar {{ pb }}?')">🗑️ Eliminar</button>
+                    </form>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No hay playbooks disponibles.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
