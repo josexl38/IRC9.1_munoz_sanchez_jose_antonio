@@ -1,0 +1,141 @@
+/* Fondo con imagen */
+body {
+    background-image: url('https://wallpapercave.com/wp/wp8114669.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Contenedor principal */
+.container {
+    width: 90%;
+    max-width: 900px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 40px;
+    margin: 60px auto;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Títulos */
+h1, h2, h3 {
+    text-align: center;
+    color: #222;
+    margin-bottom: 20px;
+}
+
+/* Formularios */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+input[type="text"],
+input[type="password"],
+textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    width: 100%;
+}
+
+/* Botones */
+button {
+    padding: 10px 20px;
+    background-color: #0077cc;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #005fa3;
+}
+
+/* Links */
+a {
+    color: #0077cc;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a.logout {
+    float: right;
+    color: red;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #005fa3;
+}
+
+/* Mensajes de error */
+.error {
+    color: red;
+    margin: 10px 0;
+    text-align: center;
+}
+
+/* Código o resultados */
+pre {
+    background-color: #f2f2f2;
+    padding: 15px;
+    border-radius: 8px;
+    overflow-x: auto;
+    white-space: pre-wrap;
+}
+
+/* Tablas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #0077cc;
+    color: white;
+}
+
+td {
+    background-color: white;
+}
+
+/* Navbar */
+nav {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+nav a {
+    margin: 0 15px;
+    padding: 8px 15px;
+    background-color: #0077cc;
+    color: white;
+    border-radius: 6px;
+}
+
+nav a:hover {
+    background-color: #005fa3;
+}
+
+textarea {
+    width: 100%;
+    max-width: 100%;
+    font-family: monospace;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+}
