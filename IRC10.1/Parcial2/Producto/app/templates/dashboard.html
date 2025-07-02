@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - Ejecutar Playbooks</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Bienvenido, {{ username }}</h1>
+
+    <nav>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/playbooks">Administrar Playbooks</a>
+        <a href="/servers">Administrar Servidores</a>
+        <a href="/logs">Ver Logs</a>
+        <a href="/logout" class="logout">Cerrar sesión</a>
+    </nav>
+
+    <h2>Selecciona Playbooks y Servidores</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul>
+                {% for category, message in messages %}
+                    <li class="error">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST">
+        <fieldset>
+            <legend>Playbooks disponibles</legend>
+            {% if playbooks %}
+                {% for pb in playbooks %}
+                    <label>
+                        <input type="checkbox" name="playbooks" value="{{ pb }}">
+                        {{ pb }}
+                    </label><br>
+                {% endfor %}
+            {% else %}
+                <p>No hay playbooks disponibles.</p>
+            {% endif %}
+        </fieldset>
+
+        <fieldset>
+            <legend>Servidores destino</legend>
+            {% if servers %}
+                {% for key, label in servers.items() %}
+                    <label>
+                        <input type="checkbox" name="servers" value="{{ key }}">
+                        {{ key.capitalize() }}
+                    </label><br>
+                {% endfor %}
+            {% else %}
+                <p>No hay servidores configurados.</p>
+            {% endif %}
+        </fieldset>
+
+        <button type="submit">Ejecutar</button>
+    </form>
+
+    {% if output %}
+        <h2>Resultado:</h2>
+        <pre>{{ output }}</pre>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
