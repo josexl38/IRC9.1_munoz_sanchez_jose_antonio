@@ -12,7 +12,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY src/ .
 
 # Exponer puerto
-EXPOSE 5000
+EXPOSE 8080
 
 # Establecer variable de entorno
 ENV APP_VERSION=1.0.0

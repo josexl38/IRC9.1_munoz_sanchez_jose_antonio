@@ -8,10 +8,15 @@ def home():
     return render_template('index.html', 
                          version=os.getenv('APP_VERSION', '1.0.0'))
 
+@app.route('/about')
+def about():
+    return "<h1>Acerca de esta aplicación</h1><p>Esta app está hecha con Flask y Docker.</p>"
+
+
 @app.route('/health')
 def health():
     return {'status': 'healthy', 'version': os.getenv('APP_VERSION', '1.0.0')}
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=8080, debug=True)
 
