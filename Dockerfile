@@ -1,22 +1,24 @@
-# Usar imagen base de Python
+# Etapa 1: build
+FROM python:3.9-slim as builder
+
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --user --no-cache-dir -r requirements.txt
+
+# Etapa 2: runtime
 FROM python:3.9-slim
 
-# Establecer directorio de trabajo
 WORKDIR /app
+COPY --from=builder /root/.local /root/.local
+ENV PATH=/root/.local/bin:$PATH
 
-# Copiar requirements y instalar dependencias
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copiar código fuente
 COPY src/ .
 
-# Exponer puerto
 EXPOSE 8080
+ENV APP_VERSION=2.0.0
 
-# Establecer variable de entorno
-ENV APP_VERSION=1.0.0
+ENV APP_PORT=8080
+ENV APP_DEBUG=true
 
-# Comando por defecto
 CMD ["python", "app.py"]
 
